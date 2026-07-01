@@ -30,18 +30,18 @@ export function getSiteMetadata(): Metadata {
       type: "website",
       images: [
         {
-          url: "/brand/logo.png",
-          width: 2065,
-          height: 512,
-          alt: title,
+          url: "/brand/og.png",
+          width: 1200,
+          height: 630,
+          alt: `${title} - Log what you wore in seconds`,
         },
       ],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title,
       description,
-      images: ["/brand/logo.png"],
+      images: ["/brand/og.png"],
     },
   };
 }

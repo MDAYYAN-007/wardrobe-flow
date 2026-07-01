@@ -44,10 +44,14 @@ export async function signupAction(
   }
 
   if (!data.session) {
-    return {
-      success:
-        "Check your email to confirm your account, then sign in to continue.",
-    };
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: parsed.data.email,
+      password: parsed.data.password,
+    });
+
+    if (signInError) {
+      return { error: signInError.message };
+    }
   }
 
   const next = formData.get("next");

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupAction } from "@/features/auth/actions/signup";
@@ -26,7 +26,6 @@ interface SignupFormProps {
 
 export function SignupForm({ next }: SignupFormProps) {
   const [isPending, startTransition] = useTransition();
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -53,35 +52,11 @@ export function SignupForm({ next }: SignupFormProps) {
         }
         if (result?.error) {
           notifyError(result.error);
-        } else if (result?.success) {
-          setSuccessMessage(result.success);
         }
       });
     },
     (errors) => notifyFormValidationError(errors),
   );
-
-  if (successMessage) {
-    return (
-      <div className="space-y-4 text-center">
-        <div
-          role="status"
-          className="rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-foreground"
-        >
-          {successMessage}
-        </div>
-        <p className="text-sm text-muted-foreground">
-          Already confirmed?{" "}
-          <Link
-            href={buildAuthHref("/login", next)}
-            className="text-primary hover:underline"
-          >
-            Sign in
-          </Link>
-        </p>
-      </div>
-    );
-  }
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">

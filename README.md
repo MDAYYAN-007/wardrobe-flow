@@ -120,7 +120,7 @@ In **Authentication → URL Configuration**:
 | **Site URL** | `http://localhost:3000` | `https://your-production-domain` |
 | **Redirect URLs** | `http://localhost:3000/auth/callback` | `https://your-production-domain/auth/callback` |
 
-Add both URLs if you use one Supabase project for dev and prod. Supabase only redirects to allowlisted callback URLs after email links (password reset, email confirmation). Normal email/password login works without clicking email links, but reset password **requires** these to match `NEXT_PUBLIC_SITE_URL`.
+In **Authentication → Providers → Email**, turn **Confirm email** off so signup signs users in immediately. Login with email/password works the same either way. Password reset still uses email links and requires the redirect URLs above to match `NEXT_PUBLIC_SITE_URL`.
 
 ### 4. Database migrations
 
@@ -219,13 +219,7 @@ npm run lint && npm run build
 
 ## Brand assets
 
-Regenerate PNG logo and favicon:
-
-```bash
-python3 scripts/generate_brand_assets.py
-```
-
-Requires [Pillow](https://pypi.org/project/Pillow/) (`pip install pillow`). Outputs `public/brand/icon.png`, `public/brand/logo.png`, and favicon set (`favicon.ico`, `apple-touch-icon.png`, etc.). App metadata references `/brand/*` via `src/lib/metadata/site.ts`.
+Static logo, favicon, and Open Graph images live in [`public/brand/`](public/brand/). App metadata references them via [`src/lib/metadata/site.ts`](src/lib/metadata/site.ts).
 
 ---
 
