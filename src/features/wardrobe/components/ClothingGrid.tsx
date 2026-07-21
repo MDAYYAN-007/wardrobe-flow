@@ -9,9 +9,15 @@ interface ClothingGridProps {
   items: ClothingItem[];
   hasFilters: boolean;
   referencedIds: string[];
+  onOpenWearHistory: (item: ClothingItem) => void;
 }
 
-export function ClothingGrid({ items, hasFilters, referencedIds }: ClothingGridProps) {
+export function ClothingGrid({
+  items,
+  hasFilters,
+  referencedIds,
+  onOpenWearHistory,
+}: ClothingGridProps) {
   if (items.length === 0) {
     return (
       <EmptyState
@@ -40,6 +46,7 @@ export function ClothingGrid({ items, hasFilters, referencedIds }: ClothingGridP
           key={item.id}
           item={item}
           isReferenced={referencedIds.includes(item.id)}
+          onOpenWearHistory={onOpenWearHistory}
         />
       ))}
     </div>

@@ -36,9 +36,14 @@ const CATEGORY_ICONS: Record<ClothingCategory, LucideIcon> = {
 interface ClothingItemCardProps {
   item: ClothingItem;
   isReferenced: boolean;
+  onOpenWearHistory: (item: ClothingItem) => void;
 }
 
-export function ClothingItemCard({ item, isReferenced }: ClothingItemCardProps) {
+export function ClothingItemCard({
+  item,
+  isReferenced,
+  onOpenWearHistory,
+}: ClothingItemCardProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -73,10 +78,11 @@ export function ClothingItemCard({ item, isReferenced }: ClothingItemCardProps) 
       >
         <CardContent className="p-3">
           <div className="flex items-start gap-1">
-            <Link
-              href={`/wardrobe?item=${item.id}`}
+            <button
+              type="button"
+              onClick={() => onOpenWearHistory(item)}
               aria-label={`View wear history for ${item.name}`}
-              className="min-w-0 flex-1 rounded-md outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+              className="min-w-0 flex-1 cursor-pointer rounded-md text-left outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
             >
               <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
                 <h3 className="line-clamp-2 text-sm font-semibold leading-snug tracking-tight">
@@ -109,7 +115,7 @@ export function ClothingItemCard({ item, isReferenced }: ClothingItemCardProps) 
                   {item.notes}
                 </p>
               ) : null}
-            </Link>
+            </button>
 
             <div className="-mr-1 -mt-0.5 flex shrink-0">
               <Button

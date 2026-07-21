@@ -30,7 +30,7 @@ function WearStatRow({ item, rank, monthLabel }: WearStatRowProps) {
   return (
     <li>
       <Link
-        href={`/wardrobe?item=${item.id}`}
+        href={`/wardrobe/${item.id}/edit`}
         className="flex items-start gap-3 rounded-lg border border-border/80 p-3 transition-colors hover:bg-muted/50"
       >
         {rank !== undefined ? (

@@ -13,6 +13,7 @@ import {
   filterClothingItems,
 } from "@/features/wardrobe/lib/filter-clothing-items";
 import { ClothingGrid } from "@/features/wardrobe/components/ClothingGrid";
+import { ItemWearHistorySheet } from "@/features/wardrobe/components/ItemWearHistorySheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -26,6 +27,7 @@ export function WardrobeView({ items, referencedIds }: WardrobeViewProps) {
   const [category, setCategory] = useState<ClothingCategory | undefined>();
   const [search, setSearch] = useState("");
   const [showArchived, setShowArchived] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<ClothingItem | null>(null);
 
   const archivedCount = useMemo(() => countArchivedClothingItems(items), [items]);
 
@@ -111,7 +113,20 @@ export function WardrobeView({ items, referencedIds }: WardrobeViewProps) {
         items={filteredItems}
         hasFilters={hasFilters}
         referencedIds={referencedIds}
+        onOpenWearHistory={setSelectedItem}
       />
+
+      {selectedItem ? (
+        <ItemWearHistorySheet
+          item={selectedItem}
+          open
+          onOpenChange={(open) => {
+            if (!open) {
+              setSelectedItem(null);
+            }
+          }}
+        />
+      ) : null}
     </div>
   );
 }
